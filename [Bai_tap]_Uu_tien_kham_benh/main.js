@@ -11,3 +11,5 @@ hospital.enqueue('facebook', 2);
 console.log(hospital.showList());
 console.log(hospital.dequeue());
 console.log(hospital.dequeue());
+console.log(hospital.dequeue());
+console.log(hospital.dequeue());

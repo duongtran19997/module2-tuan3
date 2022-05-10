@@ -10,28 +10,28 @@ export class Queue {
         return  this.storage.push(patient);
     }
     dequeue() {
-        // let newArr: number[] = []
-        // for (const argument of this.storage) {
-        //     newArr.push(argument.getCode());
+      let min = this.storage[0].getCode()
+        let minIndex = -1
+        this.storage.forEach((item,index)=>{
+            if (item.getCode()<min){
+                min=item.getCode()
+                minIndex=index
+            }
+        }
+        )
+        return this.storage.splice(minIndex,1)
+
+        // let min = this.storage[0].getCode()
+        // for (let i = 0; i < this.size(); i++) {
+        //     if(min>this.storage[i].getCode()){
+        //         min=this.storage[i].getCode()
+        //     }
         // }
-        //
-        //  newArr.sort(function (a,b) {
-        //     return b -a
-        // })
-        //
-        //
-        // return newArr.pop()
-        let min = this.storage[0].getCode()
-        for (let i = 0; i < this.size(); i++) {
-            if(min>this.storage[i].getCode()){
-                min=this.storage[i].getCode()
-            }
-        }
-        for (let i = 0; i < this.size(); i++) {
-            if(this.storage[i].getCode()===min){
-                return this.storage.splice(i,1)
-            }
-        }
+        // for (let i = 0; i < this.size(); i++) {
+        //     if(this.storage[i].getCode()===min){
+        //         return this.storage.splice(i,1)
+        //     }
+        // }
     }
     size(){
         return this.storage.length
