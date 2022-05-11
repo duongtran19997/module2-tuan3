@@ -39,4 +39,34 @@ export class Tree{
         _preOrder(this.root)
         return result
     }
+    postOrder(){
+        let result = []
+        function _postOrder(node){
+            result.push(node);
+            if (node.left) {
+                _postOrder(node.left)
+            }
+            if (node.right){
+                _postOrder(node.right)
+            }
+        }
+        _postOrder(this.root)
+        return result
+    }
+    findCurrent(value){
+        function find(node){
+            if(node===null){
+                return null
+            }else if(value<node.key){
+                    find(node.left)
+                }
+                if(node.key<value){
+                    find(node.right)
+                }
+                else{
+                    return true
+            }
+        }
+        find(this.root)
+    }
 }
