@@ -74,6 +74,63 @@ var Tree = /** @class */ (function () {
         }
         find(this.root);
     };
+    Tree.prototype.findMax = function () {
+        function _findMax(node) {
+            if (!node.right) {
+                return node.key;
+            }
+            else {
+                _findMax(node.right);
+            }
+        }
+        _findMax(this.root);
+    };
+    Tree.prototype.findMin = function (node) {
+        function _findMin(node) {
+            if (!node.left) {
+                return node;
+            }
+            else {
+                _findMin(node.left);
+            }
+        }
+        _findMin(node);
+    };
+    Tree.prototype.remove = function (data) {
+        this.root = this.removeNode(this.root, data);
+    };
+    Tree.prototype.removeNode = function (node, key) {
+        if (node === null) {
+            return null;
+        }
+        else if (key < node.data) {
+            node.left = this.removeNode(node.left, key);
+            return node;
+        }
+        else if (key > node.data) {
+            node.right = this.removeNode(node.right, key);
+            return node;
+        }
+        else {
+            if (node.left === null && node.right === null) {
+                node = null;
+                return node;
+            }
+            else if (node.left === null) {
+                node = node.right;
+                return node;
+            }
+            else if (node.right === null) {
+                node = node.left;
+                return node;
+            }
+        }
+        // let aux = this.findMin(node.right);
+        // node.data = aux.data;
+        //
+        // node.right = this.removeNode(node.right, aux.data);
+        // return node; chưa hiểu chưa llàm
+    };
     return Tree;
 }());
 exports.Tree = Tree;
