@@ -1,10 +1,10 @@
-export class Node {
-    left:Node|null=null
-    right:Node|null=null
-    key:number
-    constructor(key) {
-        this.key = key
+export class Node{
+    left:Node|null
+    right:Node|null
+    data:number
+    constructor(data:number) {
+        this.right=null
         this.left=null
-        this.right= null
+        this.data=data
     }
 }

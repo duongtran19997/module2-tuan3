@@ -1,126 +1,84 @@
 import {Node} from "./Node";
 
 export class Tree {
-    root: Node
+    root: Node | null
     count: number
 
-    constructor(value) {
-        this.root = new Node(value)
+    constructor() {
+        this.root = null
         this.count = 0
     }
 
-    insert(value): void {
-        let newNode = new Node(value)
-
-        function _insert(node) {
-            if (newNode.key < node.key) {
+    insert(data: number) {
+        let newNode = new Node(data);
+        this.count++
+        let _insert = node => {
+            if (newNode.data < node.data) {
                 if (!node.left) {
-                    node.left = newNode
+                    return node.left = newNode
                 } else {
                     _insert(node.left)
                 }
-            } else if (newNode.key > node.key) {
+            } else if (newNode.data > node.data) {
                 if (!node.right) {
-                    node.right = newNode
+                    return node.right = newNode
                 } else {
                     _insert(node.right)
                 }
             }
         }
-
         _insert(this.root)
     }
 
-    preOrder() {
-        let result = []
-
-        function _preOrder(node) {
-            result.push(node);
-            if (node.left) {
-                _preOrder(node.left)
-            }
-            if (node.rigt) {
-                _preOrder(node.right)
-            }
-        }
-
-        _preOrder(this.root)
-        return result
-    }
-
-    postOrder() {
-        let result = []
-
-        function _postOrder(node) {
-            result.push(node);
-            if (node.left) {
-                _postOrder(node.left)
-            }
-            if (node.right) {
-                _postOrder(node.right)
-            }
-        }
-
-        _postOrder(this.root)
-        return result
-    }
-
-    findCurrent(value) {
-        function find(node) {
-            if (node === null) {
-                return null
-            } else if (value < node.key) {
-                find(node.left)
-            }
-            if (node.key < value) {
-                find(node.right)
-            } else {
+    findNode(value) {
+        function _findNode(node) {
+            if (value < node.value) {
+                _findNode(node.left)
+            } else if (value > node.value) {
+                _findNode(node.right)
+            } else if (value === node.value) {
                 return true
-            }
-        }
-
-        find(this.root)
-    }
-
-    findMax() {
-        function _findMax(node) {
-            if (!node.right) {
-                return node.key
             } else {
-                _findMax(node.right)
+                return false
             }
         }
 
-        _findMax(this.root)
+        _findNode(this.root)
     }
 
-    findMin(node) {
+    findMinNode(node) {
         function _findMin(node) {
             if (!node.left) {
                 return node
             } else {
-                _findMin(node.left)
+                _findMin(node)
             }
         }
 
-        _findMin(node)
+        return _findMin(node)
     }
 
-    remove(data) {
-        this.root = this.removeNode(this.root, data)
-    }
-
-    removeNode(node, key) {
-        if (node === null) {
-            return null
-        } else if (key < node.data) {
-            node.left = this.removeNode(node.left, key)
-            return node
-        } else if (key > node.data) {
-            node.right = this.removeNode(node.right, key)
+    findMaxNode(node) {
+        if (!node.right) {
             return node
         } else {
-            if (node.left === null && node.right === null) {
+            return this.findMaxNode(node)
+        }
+    }
+
+    remove(value) {
+        this.removeNode(this.root, value)
+    }
+
+    removeNode(node, value) {
+        if (!node) {
+            return null
+        } else if (value < node.value) {
+            return this.removeNode(node.left, value)
+        } else if (value > node.value) {
+            return this.removeNode(node.right, value)
+        } else {
+            if (node.right === null && node.left === null) {
                 node = null
                 return node
             } else if (node.left === null) {
@@ -131,10 +89,52 @@ export class Tree {
                 return node
             }
         }
-        // let aux = this.findMin(node.right);
-        // node.data = aux.data;
-        //
-        // node.right = this.removeNode(node.right, aux.data);
-        // return node; chưa hiểu chưa llàm
+        let aux = this.findMinNode(node.right)
+        node.value = aux.value
+        node.right = this.removeNode(node.right, aux.value);
+        return node
+    }
+
+    inOrder() {
+        let result = [];
+
+        function _inOrder(node) {
+            if (node.left) {
+                _inOrder(node.left)
+            }
+            result.push(node);
+            if (node.right) {
+                _inOrder(node.right)
+            }
+        }
+        _inOrder(this.root)
+        return result
+    }
+
+    preOrder(){
+        let result = []
+    function _preOrder(node) {
+        result.push(node)
+        if(node.left){
+            _preOrder(node)
+        }
+        if(node.right){
+            _preOrder(node)
+        }
+    }
+    _preOrder(this.root)
+    return result
+    }
+    postOrder(){
+        let result = []
+            function _postOrder(node) {
+                if(node.left){
+                    _postOrder(node.left)
+                }if (node.right){
+                    _postOrder(node.right)
+                }
+                result.push(node);
+            }
+        return result;
     }
 }
