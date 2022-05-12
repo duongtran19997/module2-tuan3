@@ -1,31 +1,34 @@
 class BinarySearch {
     number: number[] = []
+    index: number = 0
 
     constructor() {
     }
 
     push(arr: number) {
         this.number.push(arr)
-        return
     }
 
-    find(low, high, taget) {
+    find(low, high, target) {
+
+
         // low = 0
         // high = this.number.length
         if (low <= high) {
             let mid = Math.floor((low + high) / 2)
-            let index
+            if (this.number[mid] == target) {
+               this.index = mid;
+                this.find(low, mid - 1, target); // 1
 
-            if (this.number[mid] == taget) {
-                index = mid
-                this.find(low, mid - 1, taget)
-            } else if (taget > this.number[mid]) {
-                this.find(mid + 1, high, taget)
+            } else if (target > this.number[mid]) {
+                return this.find(mid + 1, high, target);
             } else {
-                this.find(low, mid - 1, taget)
+                return this.find(low, mid - 1, target);
             }
-            return index
         }
+
+        return this.index;
+
     }
 }
 
@@ -35,8 +38,9 @@ binary.push(32)
 binary.push(32)
 binary.push(32)
 binary.push(32)
-binary.push(33)
 binary.push(34)
-binary.push(36)
+binary.push(34)
+binary.push(34)
 binary.push(39)
+//lưu ý không để trùng số giữa
 console.log(binary.find(0, 8, 32));

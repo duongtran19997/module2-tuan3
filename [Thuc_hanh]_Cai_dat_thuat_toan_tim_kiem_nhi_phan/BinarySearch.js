@@ -1,29 +1,28 @@
 var BinarySearch = /** @class */ (function () {
     function BinarySearch() {
         this.number = [];
+        this.index = 0;
     }
     BinarySearch.prototype.push = function (arr) {
         this.number.push(arr);
-        return;
     };
-    BinarySearch.prototype.find = function (low, high, taget) {
+    BinarySearch.prototype.find = function (low, high, target) {
         // low = 0
         // high = this.number.length
         if (low <= high) {
             var mid = Math.floor((low + high) / 2);
-            var index = void 0;
-            if (this.number[mid] == taget) {
-                index = mid;
-                this.find(low, mid - 1, taget);
+            if (this.number[mid] == target) {
+                this.index = mid;
+                this.find(low, mid - 1, target); // 1
             }
-            else if (taget > this.number[mid]) {
-                this.find(mid + 1, high, taget);
+            else if (target > this.number[mid]) {
+                return this.find(mid + 1, high, target);
             }
             else {
-                this.find(low, mid - 1, taget);
+                return this.find(low, mid - 1, target);
             }
-            return index;
         }
+        return this.index;
     };
     return BinarySearch;
 }());
@@ -33,8 +32,9 @@ binary.push(32);
 binary.push(32);
 binary.push(32);
 binary.push(32);
-binary.push(33);
 binary.push(34);
-binary.push(36);
+binary.push(34);
+binary.push(34);
 binary.push(39);
+//lưu ý không để trùng số giữa
 console.log(binary.find(0, 8, 32));
