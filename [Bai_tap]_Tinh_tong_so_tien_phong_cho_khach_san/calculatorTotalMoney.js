@@ -1,16 +1,31 @@
-var matrix = [[0, 1, 1, 0], [0, 5, 0, 5], [2, 0, 3, 3]];
-function checkMoney(array) {
-    var total = 0;
-    for (var j = 0; j < array.length; j++) {
-        for (var k = 0; k <= array.length; k++) {
-            if (array[j][k] === 0) {
-                for (var l = j; l < array.length; l++) {
-                    array[l][k] = 0;
-                }
-                // a.push([j,k])
+let matrix = [[0, 1, 1, 0],
+    [0, 5, 0, 5],
+    [2, 0, 3, 3]];
+// function checkMoney(matrix) {
+//     let sum: number = 0;
+//     // Duyệt theo chiều dọc, gặp số 0 là break luôn
+//     for (let i = 0; i < matrix[0].length; i++) {
+//         for (let j = 0; j < matrix.length; j++) {
+//             if (matrix[j-1][i] === 0&&j>0) {
+//                 continue;
+//             }
+//             sum += matrix[j][i];
+//         }
+//     }
+//     return sum;
+//         }
+const matrixElementsSum = matrix => {
+    let sum = 0;
+    // Duyệt theo chiều dọc, gặp số 0 là break luôn
+    for (let i = 0; i < matrix[0].length; i++) {
+        for (let j = 0; j < matrix.length; j++) {
+            if (j > 0 && matrix[j - 1][i] === 0) {
+                continue;
             }
-            total += array[j][k];
+            sum += matrix[j][i];
         }
     }
-}
-checkMoney(matrix);
+    return sum;
+};
+console.log(matrixElementsSum(matrix));
+//# sourceMappingURL=calculatorTotalMoney.js.map
